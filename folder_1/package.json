@@ -1,0 +1,17 @@
+{
+  "name": "folder_1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "helloworld.js",
+  "scripts": {
+    "start": "nodemon helloworld.js",
+    "watch": "nodemon ch02/02-helloworld.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^18.0.0",
+    "nodemon": "^2.0.18"
+  }
+}
