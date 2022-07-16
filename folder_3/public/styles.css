@@ -1,0 +1,7 @@
+body {
+    background-color: aqua;
+    font-family: consolas, sans-serif;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+}

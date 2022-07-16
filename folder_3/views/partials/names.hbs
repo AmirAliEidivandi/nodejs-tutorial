@@ -1,0 +1,11 @@
+{{#if hasName}}
+    <div class="center">
+        <h1>hello world</h1>
+        <hr />
+        {{#each names}}
+            <p>{{this.name}}</p>
+        {{/each}}
+    </div>
+{{else}}
+    <h1>not found...</h1>
+{{/if}}
