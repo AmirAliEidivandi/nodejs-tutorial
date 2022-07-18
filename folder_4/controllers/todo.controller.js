@@ -6,6 +6,15 @@ exports.addTodo = (req, res) => {
     const todo = new Todo(Math.floor(Math.random() * 1000), req.body.todo);
     todo.save((err) => {
         if (err) res.redirect("/");
-        else console.log(err);
+        console.log(err);
     });
 };
+
+exports.getIndex = (req, res) => {
+    Todo.fetchAll((todos) => {
+        res.render("index", {
+            pageTitle: "todo-list",
+            todos
+        })
+    })
+}

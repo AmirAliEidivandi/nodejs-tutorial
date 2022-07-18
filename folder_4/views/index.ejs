@@ -33,6 +33,26 @@
                 <p class="d-inline col">کارهای انجام شده : <span class="badge badge-success badge-pill">0<!-- CompletedTodos --></span></p>
                 <p class="d-inline col">کارهای باقی مانده امروز : <span class="badge badge-warning badge-pill">0<!-- RemainingTodos --></span></p>
             </div>
+            <% if (todos.length > 0) { %>
+                <ul class="list-unstyled" id="todo">
+                    <% for (let todo of todos) { %>
+                        <li>
+                            <div class="alert alert-secondary">
+                                <%= todo.text %> 
+                                <a href="#" class="close fa fa-trash" style="color: red;"></a>
+                                <a href="#" class="close fa fa-check-square mr-2" style="color: green;"></a>
+                            </div>
+                        </li>
+                    <% } %> 
+                </ul>
+            <% } else { %>
+                <div class="alert alert-warning w-50 mx-auto" role="alert">
+                    <h4 class="alert-heading">هیچ کاری برای امروز نیست</h4>
+                    <p>میتونی کار های امروزت رو بنویسی تا برات ثبت کنم</p>
+                    <hr>
+                    <p class="mb-0">اگر کم و کاستی داشت به دل نگیر <span class="fa fa-heart" style="color: red;"></span></p>
+                </div>
+            <% } %> 
         </div>
     </body>
 </html>
