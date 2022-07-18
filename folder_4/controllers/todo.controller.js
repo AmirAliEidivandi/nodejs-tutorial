@@ -14,7 +14,14 @@ exports.getIndex = (req, res) => {
     Todo.fetchAll((todos) => {
         res.render("index", {
             pageTitle: "todo-list",
-            todos
-        })
-    })
-}
+            todos,
+        });
+    });
+};
+
+exports.deleteTodo = (req, res) => {
+    Todo.deleteTodo(req.params.id, (err) => {
+        if (!err) res.redirect("/");
+        console.log(err);
+    });
+};
