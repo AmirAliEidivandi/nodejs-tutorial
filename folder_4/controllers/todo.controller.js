@@ -5,7 +5,7 @@ exports.addTodo = (req, res) => {
 
     const todo = new Todo(Math.floor(Math.random() * 1000), req.body.todo);
     todo.save((err) => {
-        if (!err) return res.redirect("/");
-        console.log(err);
+        if (err) res.redirect("/");
+        else console.log(err);
     });
 };

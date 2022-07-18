@@ -16,7 +16,7 @@ app.set("views", "views");
 setStatic(app);
 
 // routes
-app.use("/api/todo", todoRouter);
+app.use("/admin", todoRouter);
 app.get("/", (req, res) => {
     res.render("index", {
         pageTitle: "todo-list",
