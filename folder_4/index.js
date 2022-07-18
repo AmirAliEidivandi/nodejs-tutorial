@@ -17,11 +17,7 @@ setStatic(app);
 
 // routes
 app.use("/admin", todoRouter);
-app.get("/", (req, res) => {
-    res.render("index", {
-        pageTitle: "todo-list",
-    });
-});
+app.use(todoRouter);
 
 // start server
 const port = 3000;
