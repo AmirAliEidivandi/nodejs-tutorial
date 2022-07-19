@@ -1,8 +1,4 @@
-const fs = require("fs");
-const path = require("path");
-const rootDir = require("../utils/path.utils");
-const filePath = path.join(rootDir, "data", "todos.json");
-
+const { saveTodos, getTodos } = require("../utils/todos.utils");
 class Todo {
     constructor(id, text, completed = false) {
         this.id = id;
@@ -11,36 +7,34 @@ class Todo {
     }
 
     save(callback) {
-        fs.readFile(filePath, (err, fileContent) => {
-            // if (err) return [];
-
-            const todos = JSON.parse(fileContent);
+        getTodos((todos) => {
             todos.push(this);
-
-            fs.writeFile(filePath, JSON.stringify(todos), (err) => {
-                if (err) callback(err);
-                callback([]);
-            });
+            saveTodos(todos, (err) => callback(err));
         });
     }
 
     static fetchAll(callback) {
-        fs.readFile(filePath, (err, fileContent) => {
-            if (err) return [];
-
-            const todos = JSON.parse(fileContent);
-            callback(todos);
-        });
+        getTodos((todos) => callback(todos));
     }
 
     static deleteTodo(id, callback) {
-        fs.readFile(filePath, (err, fileContent) => {
-            const todos = JSON.parse(fileContent);
-            const filteredTodos = todos.filter((t) => t.id != id);
-            
-            fs.writeFile(filePath, JSON.stringify(filteredTodos), (err) => {
-                callback(err);
-            });
+        getTodos((todos) => {
+            saveTodos(
+                todos.filter((todo) => todo.id != id),
+                (err) => callback(err)
+            );
+        });
+    }
+
+    static setTodoToComplete(id, callback) {
+        getTodos((todos) => {
+            const todoIndex = todos.findIndex((todo) => todo.id == id);
+
+            const todo = todos[todoIndex];
+            todo.completed = true;
+            todos[todoIndex] = todo;
+
+            saveTodos(todos, (err) => callback(err));
         });
     }
 }
