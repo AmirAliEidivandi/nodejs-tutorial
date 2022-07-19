@@ -1,5 +1,5 @@
 const Todo = require("../models/todo.model");
-const { generateRandomId } = require("../utils/todos.utils");
+const { generateRandomId, getRemainingTodos, getCompletedTodo } = require("../utils/todos.utils");
 
 exports.addTodo = (req, res) => {
     if (!req.body.todo) return res.redirect("/");
@@ -12,10 +12,16 @@ exports.addTodo = (req, res) => {
 };
 
 exports.getIndex = (req, res) => {
-    Todo.fetchAll((todos) => {
-        res.render("index", {
-            pageTitle: "todo-list",
-            todos,
+    getCompletedTodo((completedTodo) => {
+        getRemainingTodos((remainingTodo) => {
+            Todo.fetchAll((todos) => {
+                res.render("index", {
+                    pageTitle: "todo-list",
+                    todos,
+                    completedTodo,
+                    remainingTodo,
+                });
+            });
         });
     });
 };
