@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const { setStatic } = require("./utils/statics.utils");
 const todoRouter = require("./routes/todo.routes");
+const errorController = require("./controllers/404");
 
 // middleware
 app.use(bodyParser.json());
@@ -18,6 +19,9 @@ setStatic(app);
 // routes
 app.use("/admin", todoRouter);
 app.use(todoRouter);
+
+// error control
+app.use(errorController.get404);
 
 // start server
 const port = 3000;
