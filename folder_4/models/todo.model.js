@@ -1,42 +1,22 @@
-const { saveTodos, getTodos } = require("../utils/todos.utils");
-class Todo {
-    constructor(id, text, completed = false) {
-        this.id = id;
-        this.text = text;
-        this.completed = completed;
-    }
+const { DataTypes } = require("sequelize");
+const sequelize = require("../db/database");
 
-    save(callback) {
-        getTodos((todos) => {
-            todos.push(this);
-            saveTodos(todos, (err) => callback(err));
-        });
-    }
-
-    static fetchAll(callback) {
-        getTodos((todos) => callback(todos));
-    }
-
-    static deleteTodo(id, callback) {
-        getTodos((todos) => {
-            saveTodos(
-                todos.filter((todo) => todo.id != id),
-                (err) => callback(err)
-            );
-        });
-    }
-
-    static setTodoToComplete(id, callback) {
-        getTodos((todos) => {
-            const todoIndex = todos.findIndex((todo) => todo.id == id);
-
-            const todo = todos[todoIndex];
-            todo.completed = true;
-            todos[todoIndex] = todo;
-
-            saveTodos(todos, (err) => callback(err));
-        });
-    }
-}
+const Todo = sequelize.define("Todo", {
+    id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+        allowNull: false,
+    },
+    text: {
+        type: DataTypes.STRING,
+        allowNull: false,
+    },
+    completed: {
+        type: DataTypes.BOOLEAN,
+        allowNull: true,
+        defaultValue: false,
+    },
+});
 
 module.exports = Todo;
