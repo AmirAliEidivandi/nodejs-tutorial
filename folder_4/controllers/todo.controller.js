@@ -1,52 +1,52 @@
 const Todo = require("../models/todo.model");
 
-exports.addTodo = (req, res) => {
+exports.addTodo = async (req, res) => {
     if (!req.body.todo) return res.redirect("/");
-
-    Todo.create({ text: req.body.todo })
-        .then(() => {
-            res.redirect("/");
-        })
-        .catch((err) => console.log(err));
+    try {
+        await Todo.create({ text: req.body.todo });
+        res.redirect("/");
+    } catch (error) {
+        console.log(error);
+    }
 };
 
-exports.getIndex = (req, res) => {
-    Todo.count({
-        where: {
-            completed: true,
-        },
-    }).then((completedTodos) => {
-        Todo.findAll()
-            .then((todos) => {
-                res.render("index", {
-                    pageTitle: "todo-list",
-                    todos,
-                    completedTodos,
-                    remainingTodo: todos.length - completedTodos,
-                });
-            })
-            .catch((err) => console.log(err));
-    });
+exports.getIndex = async (req, res) => {
+    try {
+        const completedTodos = await Todo.count({
+            where: {
+                completed: true,
+            },
+        });
+        const todos = await Todo.findAll();
+        res.render("index", {
+            pageTitle: "todo-list",
+            todos,
+            completedTodos,
+            remainingTodo: todos.length - completedTodos,
+        });
+    } catch (error) {}
 };
 
-exports.deleteTodo = (req, res) => {
-    Todo.destroy({
-        where: {
-            id: req.params.id,
-        },
-    })
-        .then(() => {
-            res.redirect("/");
-        })
-        .catch((err) => console.log(err));
+exports.deleteTodo = async (req, res) => {
+    try {
+        await Todo.destroy({
+            where: {
+                id: req.params.id,
+            },
+        });
+        res.redirect("/");
+    } catch (error) {
+        console.log(error);
+    }
 };
 
-exports.completeTodo = (req, res) => {
-    Todo.findByPk(req.params.id)
-        .then((todo) => {
-            todo.completed = true;
-            return todo.save();
-        })
-        .then(() => res.redirect("/"))
-        .catch((err) => console.log(err));
+exports.completeTodo = async (req, res) => {
+    try {
+        const todos = await Todo.findByPk(req.params.id);
+        todos.completed = true;
+        await todos.save();
+        res.redirect("/");
+    } catch (error) {
+        console.log(error);
+    }
 };
