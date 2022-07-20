@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const { setStatic } = require("./utils/statics.utils");
 const todoRouter = require("./routes/todo.routes");
 const errorController = require("./controllers/404");
-const sequelize = require("./db/database");
+require("./db/database");
 
 // middleware
 app.use(bodyParser.json());
@@ -27,10 +27,4 @@ app.use(errorController.get404);
 
 // connected database
 const PORT = process.env.PORT || 3000;
-sequelize
-    .sync()
-    .then((result) => {
-        // console.log(result);
-        app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
-    })
-    .catch((err) => console.log(err));
+app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
