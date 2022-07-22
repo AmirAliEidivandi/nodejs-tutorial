@@ -1,12 +1,11 @@
-const path = require("path");
 const express = require("express");
 const app = express();
+require("dotenv").config({ path: "./config/config.env" });
 const homeRoute = require("./routes/home.routes");
 
 // middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(express.static(path.join(__dirname, "public")));
+require("./middlewares/index.middleware")(app);
+require("./db/connectDB")(process.env.MONGO_URI);
 
 // view engine
 app.set("view engine", "ejs");
@@ -15,5 +14,5 @@ app.set("views", "views");
 // routes
 app.use(homeRoute);
 
-const PORT = process.env.PORT || 8000;
-app.listen(PORT, () => console.log(`Example app listening on port ${PORT}!`));
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => console.log(`Example app listening in ${process.env.NODE_ENV} mode on port ${PORT}!`));
