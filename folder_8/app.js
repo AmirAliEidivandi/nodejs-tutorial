@@ -10,10 +10,6 @@ const { MONGO_URI, PORT, NODE_ENV, BOOTSTRAP, FONT_AWESOME } = process.env;
 require("./middlewares/index.middleware")(app, BOOTSTRAP, FONT_AWESOME);
 require("./db/connectDB")(MONGO_URI);
 
-// view engine
-app.set("view engine", "ejs");
-app.set("views", "views");
-
 // routes
 app.use(homeRoute);
 
