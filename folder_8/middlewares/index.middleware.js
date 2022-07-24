@@ -3,7 +3,7 @@ const morgan = require("morgan");
 const express = require("express");
 const expressLayout = require("express-ejs-layouts");
 
-module.exports = (app, BOOTSTRAP, FONT_AWESOME, MDB_UI_KIT) => {
+module.exports = (app, BOOTSTRAP, FONT_AWESOME) => {
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
     app.use(express.static(path.join(__dirname, "..", "public")));
